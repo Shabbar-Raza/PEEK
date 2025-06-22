@@ -113,8 +113,15 @@ export function RecordingProvider({ children }: { children: React.ReactNode }) {
         if (result.status === 'completed') {
           console.log('Transcription completed successfully');
           // Format the transcript segments
+          type AssemblyAIUtterance = {
+            speaker?: string;
+            text: string;
+            start: number;
+            end: number;
+            confidence?: number;
+          };
           const segments: TranscriptSegment[] = result.utterances.map(
-            (utterance: any, index: number) => ({
+            (utterance: AssemblyAIUtterance, index: number) => ({
               id: `seg-${index}-${utterance.start}`,
               speaker: utterance.speaker || 'SPEAKER_0',
               text: utterance.text,
